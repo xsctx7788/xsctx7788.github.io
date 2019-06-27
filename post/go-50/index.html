@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Go的50个常见错误（更新中） | 日技</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1561626827685">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://xsctx7788.github.io/">
+        <img src="https://xsctx7788.github.io//images/avatar.png?v=1561626827685" class="site-logo">
+        <h1 class="site-title">日技</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://xsctx7788.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Go的50个常见错误（更新中）</h2>
+            <div class="post-date">2019-04-04</div>
+            
+              <div class="feature-container" style="background-image: url('https://xsctx7788.github.io//post-images/go-50.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>原文：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/">50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs</a></p>
+<p>翻译已获作者授权，转载请注明来源。</p>
+<p><a href="https://segmentfault.com/a/1190000013739000#articleHeader4">本文</a>是在segmentfault上查资料时看到的，通读下来感觉可以避免踩一些坑，原作者已更新一部分内容，但是翻译者似乎并没有更新，所以申请了一下授权，结合自己的经验把最新的内容翻译一下供大家参考。</p>
+<h2 id="前言">前言</h2>
+<hr>
+<p>Go是一门简单有趣的语言，但是和其他语言一样，它也有一些陷阱（坑？），当然，其中的大多数并不是Go本身的错。如果你是从其他语言转到Go语言来的，那么你会很自然的遇到一部分错误，另一部分则是由于错误的假设和缺少细节导致的。</p>
+<p>如果花时间学习官方 doc、wiki、讨论邮件列表、 Rob Pike 的许多精品文章以及 Go 的源码，会发现这篇文章中的坑是很常见的，毕竟每个人开始情况是不一样的。新手跳过这些坑，能减少大量调试代码的时间。</p>
+<h2 id="初级篇">初级篇</h2>
+<ul>
+<li><a href="#1">左大括号 <font color=red>{</font> 不能单独放一行</a></li>
+<li><a href="#2">未使用的变量报错</a></li>
+<li><a href="#3">未使用的引入</a></li>
+<li><a href="#4">简短声明的变量只能在函数内部使用</a></li>
+<li><a href="#5">使用简短声明来重复声明变量</a></li>
+<li><a href="#6">不能使用简短声明来设置字段的值</a></li>
+<li><a href="#7">变量覆盖</a></li>
+<li><a href="#8">显式类型的变量无法使用 nil 来初始化</a></li>
+<li><a href="#9">直接使用值为 nil 的 slice、map</a></li>
+<li><a href="#10">map 容量</a></li>
+<li><a href="#11">string 类型的变量值不能为 nil</a></li>
+<li><a href="#12">Array 类型的值作为函数参数</a></li>
+<li><a href="#13"></a></li>
+<li><a href="#14"></a></li>
+<li><a href="#15"></a></li>
+<li><a href="#16"></a></li>
+<li><a href="#17"></a></li>
+<li><a href="#18"></a></li>
+<li><a href="#19"></a></li>
+<li><a href="#20"></a></li>
+<li><a href="#21"></a></li>
+<li><a href="#22"></a></li>
+<li><a href="#23"></a></li>
+<li><a href="#24"></a></li>
+<li><a href="#25"></a></li>
+<li><a href="#26"></a></li>
+<li><a href="#27"></a></li>
+<li><a href="#28"></a></li>
+<li><a href="#29"></a></li>
+<li><a href="#30"></a></li>
+</ul>
+<h2 id="中级篇">中级篇</h2>
+<h2 id="高级篇">高级篇</h2>
+<hr>
+<h3 id="span-id11左大括号-font-colorredfont-不能单独放一行span"><span id="1">1.左大括号 <font color=red>{</font> 不能单独放一行</span></h3>
+<p>在其他大多数语言中，<font color=red>{</font> 的位置你自行决定。Go 比较特别，遵守分号注入规则（automatic semicolon injection）：编译器会在每行代码尾部特定分隔符后加 <font color=red>;</font> 来分隔多条语句，比如会在 <font color=red>)</font> 后加分号：</p>
+<h4 id="错误示例">错误示例：</h4>
+<pre><code class="language-go:n">func main()                    
+{
+    println(&quot;hello world&quot;)
+}
+
+// 等效于
+func main();    // 无函数体                    
+{
+    println(&quot;hello world&quot;)
+}
+</code></pre>
+<h4 id="编译错误">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox826898458/main.go:6: syntax error: unexpected semicolon or newline before {</font></p>
+</blockquote>
+<h4 id="正确示例">正确示例：</h4>
+<pre><code class="language-go:n">func main() {
+    println(&quot;hello world&quot;)
+}
+</code></pre>
+<h3 id="span-id22未使用的变量报错span"><span  id="2">2.未使用的变量报错</span></h3>
+<p>如果你的代码中有一个未使用的变量，那么程序将无法通过编译。但有一个例外，你可以声明全局变量但是不使用。有未使用的函数参数也没关系。如果为未使用的变量重新赋值，代码仍然无法编译，那么你需要在某处使用变量值来使编译器通过。</p>
+<h4 id="错误示例-2">错误示例;</h4>
+<pre><code class="language-go:n">var gvar int //not an error
+
+func main() {  
+    var one int   //error, unused variable
+    two := 2      //error, unused variable
+    var three int //error, even though it's assigned 3 on the next line
+    three = 3
+
+    func(unused string) {
+        fmt.Println(&quot;Unused arg. No compile error&quot;)
+    }(&quot;what?&quot;)
+}
+</code></pre>
+<h4 id="编译错误-2">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox473116179/main.go:6: one declared and not used /tmp/sandbox473116179/main.go:7: two declared and not used /tmp/sandbox473116179/main.go:8: three declared and not used</font></p>
+</blockquote>
+<h4 id="正确示例-2">正确示例：</h4>
+<pre><code class="language-go:n">// 可以直接注释或移除未使用的变量
+func main() {  
+    var one int
+    _ = one
+
+    two := 2 
+    fmt.Println(two)
+
+    var three int 
+    three = 3
+    one = three
+
+    var four int
+    four = four
+}
+</code></pre>
+<h3 id="span-id33未使用的引入span"><span id="3">3.未使用的引入</span></h3>
+<p>如果你导入一个包，但包中的变量、函数、接口和结构体一个都没有用到的话，则代码将无法编译。可以使用空白标识符 <code>_</code>作为别名来忽略导入的包，从而避免编译错误，这只会执行 package 的 <font color=red>init()</font></p>
+<h4 id="错误示例-3">错误示例：</h4>
+<pre><code class="language-go:n">import (  
+    &quot;fmt&quot;
+    &quot;log&quot;
+    &quot;time&quot;
+)
+
+func main() {  
+}
+</code></pre>
+<h4 id="编译错误-3">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox627475386/main.go:4: imported and not used: &quot;fmt&quot; /tmp/sandbox627475386/main.go:5: imported and not used: &quot;log&quot; /tmp/sandbox627475386/main.go:6: imported and not used: &quot;time&quot;</font></p>
+</blockquote>
+<h4 id="正确示例-3">正确示例：</h4>
+<pre><code class="language-go:n">//原作者说可以使用 goimports 工具来注释或移除未使用到的包，goimports默认是8格缩进，用的时候注意
+import (  
+    _ &quot;fmt&quot;
+    &quot;log&quot;
+    &quot;time&quot;
+)
+
+var _ = log.Println
+
+func main() {  
+    _ = time.Now
+}
+</code></pre>
+<h3 id="span-id44简短声明的变量只能在函数内部使用span"><span id="4">4.简短声明的变量只能在函数内部使用</span></h3>
+<h4 id="错误示例-4">错误示例：</h4>
+<pre><code class="language-go:n">myvar := 1 //error
+
+func main() {  
+}
+</code></pre>
+<h4 id="编译错误-4">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox265716165/main.go:3: non-declaration statement outside function body</font></p>
+</blockquote>
+<h4 id="正确示例-4">正确示例：</h4>
+<pre><code class="language-go:n">var myvar = 1
+
+func main() {  
+}
+</code></pre>
+<h3 id="span-id55使用简短声明来重复声明变量span"><span id="5">5.使用简短声明来重复声明变量</span></h3>
+<p>不能在独立语句中重新声明变量，但允许在多变量声明中重新声明，同时至少还要声明一个新变量，即:= 左侧至少有一个新变量，才允许多变量的重复声明。</p>
+<h4 id="错误示例-5">错误示例:</h4>
+<pre><code class="language-go:n">func main() {  
+    one := 0
+    one := 1 //error
+}
+</code></pre>
+<h4 id="编译错误-5">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox706333626/main.go:5: no new variables on left side of :=</font></p>
+</blockquote>
+<h4 id="正确示例-5">正确示例：</h4>
+<pre><code class="language-go:n">func main() {  
+    one := 0
+    one, two := 1,2
+    one,two = two,one
+}
+</code></pre>
+<h3 id="span-id66不能使用简短声明给字段赋值span"><span id="6">6.不能使用简短声明给字段赋值</span></h3>
+<p>struct 的变量字段不能使用 := 来赋值，可以使用临时变量或预先声明所有变量并使用标准赋值运算符</p>
+<h4 id="错误示例-6">错误示例：</h4>
+<pre><code class="language-go:n">import (  
+  &quot;fmt&quot;
+)
+
+type info struct {  
+  result int
+}
+
+func work() (int,error) {  
+    return 13,nil  
+}
+
+func main() {  
+  var data info
+  data.result, err := work() //error
+  fmt.Printf(&quot;info: %+v\n&quot;,data)
+}
+</code></pre>
+<h4 id="编译错误-6">编译错误：</h4>
+<blockquote>
+<p><font color=red>prog.go:15: non-name data.result on left side of := </font></p>
+</blockquote>
+<h4 id="正确示例-6">正确示例：</h4>
+<pre><code class="language-go:n">import (  
+  &quot;fmt&quot;
+)
+
+type info struct {  
+  result int
+}
+
+func work() (int,error) {  
+    return 13,nil  
+}
+
+func main() {  
+  var data info
+  var err error
+  data.result, err = work() //ok
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  fmt.Printf(&quot;info: %+v\n&quot;,data) //prints: info: {result:13}
+}
+</code></pre>
+<h3 id="span-id77变量覆盖span"><span id="7">7.变量覆盖</span></h3>
+<p>对于从动态语言转过来的开发者来说，简短声明很好用，也很容易被误认为常规赋值操作。如果你在新的代码块中犯了这个错误，通常编译不会报错，但是变量不会按你的预期工作。</p>
+<h4 id="错误示例-7">错误示例：</h4>
+<pre><code class="language-go:n">func main() {
+    x := 1
+    println(x)        // 1
+    {
+        println(x)    // 1
+        x := 2
+        println(x)    // 2    // 新的 x 变量的作用域只在代码块内部
+    }
+    println(x)        // 1
+}
+</code></pre>
+<p>即使是经验丰富的Go开发者也很容易犯这个错，而且并不容易发现。
+可使用 vet 工具来诊断这种变量覆盖，Go 默认不做覆盖检查，添加 -shadow 选项来启用：</p>
+<blockquote>
+<p>go tool vet -shadow your_file.go</p>
+</blockquote>
+<p>注意 vet 不会报告全部被覆盖的变量，可以使用 go-nyet 来做进一步的检测：</p>
+<blockquote>
+<p>$GOPATH/bin/go-nyet main.go</p>
+</blockquote>
+<h3 id="span-id88显式类型的变量无法使用-nil-来初始化span"><span id="8">8.显式类型的变量无法使用 nil 来初始化</span></h3>
+<p><font color=red>nil</font> 是 interface、function、pointer、map、slice 和 channel 类型变量的默认初始值。但声明时不指定类型，编译器也无法推断出变量的具体类型。</p>
+<h4 id="错误示例-8">错误示例：</h4>
+<pre><code class="language-go:n">func main() {  
+    var x = nil //error
+    _ = x
+}
+</code></pre>
+<h4 id="编译错误-7">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox188239583/main.go:4: use of untyped nil</font></p>
+</blockquote>
+<h4 id="正确示例-7">正确示例：</h4>
+<pre><code class="language-go:n">func main() {  
+    var x interface{} = nil
+    _ = x
+}
+</code></pre>
+<h3 id="span-id99直接使用值为-nil-的-slice-mapspan"><span id="9">9.直接使用值为 nil 的 slice、map</span></h3>
+<p>允许对值为 nil 的 slice 添加元素，但对值为 nil 的 map 添加元素则会造成运行时 panic</p>
+<h4 id="错误示例-9">错误示例：</h4>
+<pre><code class="language-go:n">func main() {  
+    var m map[string]int
+    m[&quot;one&quot;] = 1 //error
+}
+</code></pre>
+<h4 id="正确示例-8">正确示例：</h4>
+<pre><code class="language-go:n">func main() {  
+    var s []int
+    s = append(s,1)
+}
+</code></pre>
+<h3 id="span-id1010map的容量span"><span id="10">10.map的容量</span></h3>
+<p>在创建 map 类型的变量时可以指定容量，但不能像 slice 一样使用 cap() 来检测分配空间的大小</p>
+<h4 id="错误示例-10">错误示例：</h4>
+<pre><code class="language-go:n">func main() {
+    m := make(map[string]int, 99)
+    println(cap(m))     // error: invalid argument m1 (type map[string]int) for cap  
+}   
+</code></pre>
+<h4 id="编译错误-8">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox326543983/main.go:5: invalid argument m (type map[string]int) for cap</font></p>
+</blockquote>
+<h3 id="span-id1111string-类型的变量值不能为-nilspan"><span id="11">11.string 类型的变量值不能为 nil</span></h3>
+<p>对于习惯将“nil”标识符分配给字符串变量的开发人员来说，这是一个坑。</p>
+<h4 id="错误示例-11">错误示例：</h4>
+<pre><code class="language-go:n">package main
+func main() {  
+    var x string = nil  // cannot use nil as type string in assignment
+    if x == nil {  // invalid operation: x == nil (mismatched types string and nil)
+        x = &quot;default&quot;
+    }
+}
+</code></pre>
+<h4 id="编译错误-9">编译错误：</h4>
+<blockquote>
+<p><font color=red>/tmp/sandbox630560459/main.go:4: cannot use nil as type string in assignment /tmp/sandbox630560459/main.go:6: invalid operation: x == nil (mismatched types string and nil)</font></p>
+</blockquote>
+<h4 id="正确示例-9">正确示例：</h4>
+<pre><code class="language-go:n">package main
+func main() {  
+    var x string  //字符串类型的零值是空串 &quot;&quot;
+    if x == &quot;&quot; {
+        x = &quot;default&quot;
+    }
+}
+</code></pre>
+<h3 id="span-id1212array-类型的值作为函数参数span"><span id="12">12.Array 类型的值作为函数参数</span></h3>
+<p>在 C/C++ 中，数组（名）是指针。将数组作为参数传进函数时，相当于传递了数组内存地址的引用，在函数内部会改变该数组的值。</p>
+<p>在 Go 中，数组是值。作为参数传进函数时，传递的是数组的原始值拷贝，此时在函数内部是无法更新该数组的</p>
+<h4 id="错误示例-12">错误示例：</h4>
+<pre><code class="language-go:n">package main
+import &quot;fmt&quot;
+// 数组使用值拷贝传参
+func main() {
+    x := [3]int{1,2,3}
+    func(arr [3]int) {
+        arr[0] = 7
+        fmt.Println(arr)    // [7 2 3]
+    }(x)
+    fmt.Println(x)            // [1 2 3]    // 并不是你以为的 [7 2 3]
+}
+</code></pre>
+<h4 id="正确示例-10">正确示例：</h4>
+<pre><code class="language-go:n">// 方法一：如果需要更新原始数组数据，请使用数组指针类型。
+// 传址会修改原数据
+func main() {
+    x := [3]int{1,2,3}
+    func(arr *[3]int) {
+        (*arr)[0] = 7    
+        fmt.Println(arr)    // &amp;[7 2 3]
+    }(&amp;x)
+    fmt.Println(x)    // [7 2 3]
+}
+
+// 方法二：直接使用 slice：即使函数内部得到的是 slice 的值拷贝，但依旧会更新 slice 的原始数据（底层 array）
+// 会修改 slice 的底层 array，从而修改 slice
+func main() {
+    x := []int{1, 2, 3}
+    func(arr []int) {
+        arr[0] = 7
+        fmt.Println(x)    // [7 2 3]
+    }(x)
+    fmt.Println(x)    // [7 2 3]
+}
+</code></pre>
+<h3 id="span-idspan"><span id=""></span></h3>
+<h4 id="错误示例-13">错误示例：</h4>
+<pre><code></code></pre>
+<h4 id="编译错误-10">编译错误：</h4>
+<blockquote>
+<p><font color=red></font></p>
+</blockquote>
+<h4 id="正确示例-11">正确示例：</h4>
+<pre><code></code></pre>
+<h3 id="span-idspan-2"><span id=""></span></h3>
+<h4 id="错误示例-14">错误示例：</h4>
+<pre><code></code></pre>
+<h4 id="编译错误-11">编译错误：</h4>
+<blockquote>
+<p><font color=red></font></p>
+</blockquote>
+<h4 id="正确示例-12">正确示例：</h4>
+<pre><code></code></pre>
+<h3 id="span-idspan-3"><span id=""></span></h3>
+<h4 id="错误示例-15">错误示例：</h4>
+<pre><code></code></pre>
+<h4 id="编译错误-12">编译错误：</h4>
+<blockquote>
+<p><font color=red></font></p>
+</blockquote>
+<h4 id="正确示例-13">正确示例：</h4>
+<pre><code></code></pre>
+<h3 id="span-idspan-4"><span id=""></span></h3>
+<h4 id="错误示例-16">错误示例：</h4>
+<pre><code></code></pre>
+<h4 id="编译错误-13">编译错误：</h4>
+<blockquote>
+<p><font color=red></font></p>
+</blockquote>
+<h4 id="正确示例-14">正确示例：</h4>
+<pre><code></code></pre>
+<h3 id="span-idspan-5"><span id=""></span></h3>
+<h4 id="错误示例-17">错误示例：</h4>
+<pre><code></code></pre>
+<h4 id="编译错误-14">编译错误：</h4>
+<blockquote>
+<p><font color=red></font></p>
+</blockquote>
+<h4 id="正确示例-15">正确示例：</h4>
+<pre><code></code></pre>
+<h3 id="span-idspan-6"><span id=""></span></h3>
+<h4 id="错误示例-18">错误示例：</h4>
+<pre><code></code></pre>
+<h4 id="编译错误-15">编译错误：</h4>
+<blockquote>
+<p><font color=red></font></p>
+</blockquote>
+<h4 id="正确示例-16">正确示例：</h4>
+<pre><code></code></pre>
+<h3 id="span-idspan-7"><span id=""></span></h3>
+<h4 id="错误示例-19">错误示例：</h4>
+<pre><code></code></pre>
+<h4 id="编译错误-16">编译错误：</h4>
+<blockquote>
+<p><font color=red></font></p>
+</blockquote>
+<h4 id="正确示例-17">正确示例：</h4>
+<pre><code></code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://xsctx7788.github.io//tag/go" class="tag">
+                    go
+                  </a>
+                
+              </div>
+            
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'd6d619cb3a74c3ef4278',
+        clientSecret: 'ce428d0d769ff6b90b6ee219169ed597fd6f6c9b',
+        repo: 'xsctx7788.github.io',
+        owner: 'xsctx7788',
+        admin: ['xsctx7788'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
