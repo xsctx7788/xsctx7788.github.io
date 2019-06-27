@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>test | 日技</title>
+<title>Golang安装gRPC | 日技</title>
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1561628759803">
+<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1561631265105">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://xsctx7788.github.io/">
-        <img src="https://xsctx7788.github.io//images/avatar.png?v=1561628759803" class="site-logo">
+        <img src="https://xsctx7788.github.io//images/avatar.png?v=1561631265105" class="site-logo">
         <h1 class="site-title">日技</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -98,13 +98,62 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">test</h2>
-            <div class="post-date">2019-06-27</div>
+            <h2 class="post-title">Golang安装gRPC</h2>
+            <div class="post-date">2019-04-09</div>
+            
+              <div class="feature-container" style="background-image: url('https://xsctx7788.github.io//post-images/golang-grpc.jpg')">
+              </div>
             
             <div class="post-content">
-              <h1 id="测试文章">测试文章</h1>
+              <p>Mac环境下Golang安装gRPC</p>
+ <!-- more -->
+<h4 id="官方安装命令">官方安装命令：</h4>
+<pre><code>go get google.golang.org/grpc
+</code></pre>
+<p>但是这样安装是装不上的</p>
+<blockquote>
+<p>package google.golang.org/grpc: unrecognized import path &quot;google.golang.org/grpc&quot;(https fetch: Get https://google.golang.org/grpc?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</p>
+</blockquote>
+<p>由于国内的网络原因，并且代码已经转移到github上面了，但是代码里面的包依赖还是没有修改，还是google.golang.org这种，所以不能使用go get的方式安装（当然翻墙之后就可以了）。
+因此我们介绍不需要翻墙的安装方法：</p>
+<h4 id="在-gopath-下创建-googlegolangorg-目录">在 GOPATH 下创建 google.golang.org 目录</h4>
+<pre><code>mkdir -p $GOPATH/src/google.golang.org/
+cd $GOPATH/src/google.golang.org/
+</code></pre>
+<h4 id="拉取源代码">拉取源代码</h4>
+<pre><code>git clone https://github.com/grpc/grpc-go grpc
+</code></pre>
+<p>这时我们去执行安装命令</p>
+<pre><code>go install google.golang.org/grpc
+</code></pre>
+<p>会提示丢失了一些安装包，类似：</p>
+<blockquote>
+<p>grpc/internal/transport/controlbuf.go:27:2: cannot find package &quot;golang.org/x/net/http2&quot; in any of:
+/home/dc2-user/go/src/golang.org/x/net/http2 (from $GOROOT)
+/home/dc2-user/gopath/src/golang.org/x/net/http2 (from $GOPATH)
+grpc/internal/transport/controlbuf.go:28:2: cannot find package &quot;golang.org/x/net/http2/hpack&quot; in any of:
+/home/dc2-user/go/src/golang.org/x/net/http2/hpack (from $GOROOT)
+/home/dc2-user/gopath/src/golang.org/x/net/http2/hpack (from $GOPATH)</p>
+</blockquote>
+<p>根据提示去安装对应的包即可。</p>
+<h4 id="安装-golangorgx安装对应的即可">安装 golang.org/x/*（安装对应的即可）</h4>
+<pre><code>git clone https://github.com/golang/sys.git 
+git clone https://github.com/golang/net.git 
+git clone https://github.com/golang/text.git 
+git clone https://github.com/golang/lint.git 
+git clone https://github.com/golang/tools.git 
+git clone https://github.com/golang/crypto.git
+</code></pre>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://xsctx7788.github.io//tag/go" class="tag">
+                    go
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">
