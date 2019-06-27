@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>日技</title>
+<title>test | 日技</title>
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -91,64 +97,35 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://xsctx7788.github.io//post/test">
-                  <h2 class="post-title">test</h2>
-                </a>
-                <div class="post-date">
-                  2019-06-27
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
+          <div class="post-detail">
+            <h2 class="post-title">test</h2>
+            <div class="post-date">2019-06-27</div>
+            
+            <div class="post-content">
+              <h1 id="测试文章">测试文章</h1>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
                 <a href="https://xsctx7788.github.io//post/go-50">
-                  <h2 class="post-title">Go的50个常见错误（更新中）</h2>
+                  <h3 class="post-title">
+                    Go的50个常见错误（更新中）
+                  </h3>
                 </a>
-                <div class="post-date">
-                  2019-04-04
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
               </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://xsctx7788.github.io//post/hello-gridea">
-                  <h2 class="post-title">Hello Gridea</h2>
-                </a>
-                <div class="post-date">
-                  2018-12-12
-                </div>
-                <div class="post-abstract">
-                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+            
 
-                </div>
-              </div>
+            
               
-                <a class="right" href="https://xsctx7788.github.io//post/hello-gridea">
-                  <div class="feature-container" style="background-image: url('https://xsctx7788.github.io//post-images/hello-gridea.png')">
-                  </div>
-                </a>
+                <div id="gitalk-container" data-aos="fade-in"></div>
               
-            </article>
-          
 
-          <div class="pagination-container">
-  
-  
-</div>
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -170,6 +147,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'd6d619cb3a74c3ef4278',
+        clientSecret: 'ce428d0d769ff6b90b6ee219169ed597fd6f6c9b',
+        repo: 'xsctx7788.github.io',
+        owner: 'xsctx7788',
+        admin: ['xsctx7788'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
