@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xsctx7788.github.io/</id>
     <title>日技</title>
-    <updated>2019-06-28T01:32:12.710Z</updated>
+    <updated>2019-06-28T01:39:11.682Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xsctx7788.github.io/"/>
     <link rel="self" href="https://xsctx7788.github.io//atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://xsctx7788.github.io//images/avatar.png</logo>
     <icon>https://xsctx7788.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, 日技</rights>
+    <entry>
+        <title type="html"><![CDATA[每日集问-2019-04-11]]></title>
+        <id>https://xsctx7788.github.io//post/daily-20190411</id>
+        <link href="https://xsctx7788.github.io//post/daily-20190411">
+        </link>
+        <updated>2019-04-11T01:34:54.000Z</updated>
+        <summary type="html"><![CDATA[<p>每日集问-2019-04-11</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>每日集问-2019-04-11</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Golang安装gRPC]]></title>
         <id>https://xsctx7788.github.io//post/golang-grpc</id>
