@@ -128,12 +128,12 @@
     <div id="loop-container" class="loop-container">
       <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
         
-          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-20190411.jpg">
+          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-20190425.jpg">
           </div>
         
 
         <div class="entry-meta">
-          <span class="date">· 2019-04-11 ·</span> <span> / </span>
+          <span class="date">· 2019-04-25 ·</span> <span> / </span>
           <span class="author">
             <a href="https://xsctx7788.github.io/" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
@@ -150,18 +150,53 @@
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>2019-04-11</p>
-<!-- more --> 
-<h3 id="数据库行锁">数据库行锁</h3>
-<p>行锁，表锁，页锁，分布式锁，乐观锁 悲观锁，一般不关心这个，一般框架里的db类都自动帮你加好的吧，默认都是行锁的，乐观锁是读的时候，悲观锁是写的时候，尤其是Update,delete这种会阻塞住，悲观锁这些数据库事物处理都给你搞好了的，行锁就是悲观锁的一种，innodb才有的</p>
-<h3 id="fpm和cli模式">fpm和cli模式</h3>
-<p>nginx的PHP是fpm模式，crontab这种是cli模式。
-可以理解为cli是命令行版本，fpm是后台多进程服务版本，nginx和php-fpm通信来完成web服务的。从5.6版本开始自带，反正之前fpm是要自己装的，后来进官方包了就不用自己装了。用php -s可以开启一个web进程</p>
-<blockquote>
-<p>php -S localhost:8080 -t public public/index.php (5.6以后的框架都可以这么开启web服务)</p>
-</blockquote>
-<h3 id="两台机器session问题怎么解决">两台机器session问题怎么解决</h3>
-<p>可以用redis，memcache，甚至可以用mysql，只要不是存在本地就可以</p>
+              <p>2019-04-25（更新中）</p>
+<!-- more -->
+<h1 id="负载均衡怎么做">负载均衡怎么做</h1>
+<h1 id="数据库引擎的区别">数据库引擎的区别</h1>
+<p>先记录一个自己之前不知道的知识，一般数据库可以设MyISAM或InnoDB，表也可设定。而且表使用的引擎可以和数据库使用的引擎是不同的，比如数据库是InnoDB，其中的表是MyISAM，这是不会有影响的。如果表未指定引擎则使用数据库的引擎设置，仅此而已。类似还有字符集设置，数据库 &gt; 表 &gt; 字段，没有就按上级的设置处理。
+这里只说一下常见的两个引擎，<strong>MyISAM</strong>和<strong>InnoDB</strong>，先来看一下怎么何时选择</p>
+<h2 id="选择">选择</h2>
+<p>采用MyISAM引擎</p>
+<ul>
+<li>R/W &gt; 100:1 且update相对较少</li>
+<li>并发不高（可以通过架构解决）</li>
+<li>表数据量小</li>
+<li>硬件资源有限</li>
+</ul>
+<p>采用InnoDB引擎</p>
+<ul>
+<li>R/W比较小，频繁更新大字段</li>
+<li>表数据量超过1000万，并发高</li>
+<li>安全性和可用性要求高</li>
+</ul>
+<h2 id="myisam">MyISAM</h2>
+<p>MyISAM是MySQL的<strong>默认</strong>数据库引擎（5.5版之前），由早期的ISAM（Indexed Sequential Access Method：有索引的顺序访问方法）所改良。虽然性能极佳，但却有一个缺点：不支持事务处理（transaction）。不过，在这几年的发展下，MySQL也导入了InnoDB（另一种数据库引擎），以强化参考完整性与并发违规处理机制，后来就逐渐取代MyISAM。</p>
+<h2 id="innodb">InnoDB</h2>
+<p>InnoDB，是MySQL的数据库引擎之一，为MySQL AB发布binary的标准之一。InnoDB由Innobase Oy公司所开发，2006年五月时由甲骨文公司并购。与传统的ISAM与MyISAM相比，InnoDB的最大特色就是支持了ACID兼容的事务（Transaction）功能，类似于PostgreSQL。目前InnoDB采用双轨制授权，一是GPL授权，另一是专有软件授权。</p>
+<h2 id="区别">区别</h2>
+<pre><code class="language-table">项目(-)  | MyISAM(-) | InnoDB(-)
+存储结构 | 每个MyISAM在磁盘上存储成三个文件。第一个文件的名字以表的名字开始，扩展名指出文件类型。.frm文件存储表定义。数据文件的扩展名为.MYD (MYData)。索引文件的扩展名是.MYI (MYIndex)。 | 所有的表都保存在同一个数据文件中（也可能是多个文件，或者是独立的表空间文件），InnoDB表的大小只受限于操作系统文件的大小，一般为2GB。
+存储空间 | 可被压缩，存储空间较小。支持三种不同的存储格式：静态表、动态表、压缩表。 | 需要更多的内存和存储，它会在主内存中建立其专用的缓冲池用于高速缓冲数据和索引。
+可移植性、备份及恢复 | 数据是以文件的形式存储，所以在跨平台的数据转移中会很方便。在备份和恢复时可单独针对某个表进行操作。 | 免费的方案可以是拷贝数据文件、备份 binlog，或者用 mysqldump，在数据量达到几十G的时候就相对痛苦了。
+事务支持 | 不支持 | 支持
+AUTO_INCREMENT | 可以和其他字段一起建立联合索引 | 必须包含只有该字段的索引
+表锁差异 | 只支持表级锁 | 支持事务和行级锁（补充1）
+FULLTEXT索引 | 支持 | 不支持（补充4）
+集群索引 | 不支持 | 支持
+表主键 | 允许没有任何索引和主键的表存在，索引都是保存行的地址 | 如果没有设定主键或者非空唯一索引，就会自动生成一个6字节的主键(用户不可见)，数据是主索引的一部分，附加索引保存的是主索引的值。
+表的具体行数（补充2） | 保存有表的总行数 | 没有保存表的总行数
+CURD操作 | 擅长SELECT | 擅长INSERT、UPDATE、DELETE（补充3）
+外键 | 不支持 | 支持
+</code></pre>
+<h2 id="补充">补充</h2>
+<ol>
+<li>InnoDB表的行锁也不是绝对的，假如在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表，例如update table set num=1 where name like “%aaa%”，即非主键的会锁全表。</li>
+<li>在执行select count() from table时，InnoDB要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count()语句包含 where条件时，两种表的操作是一样的。</li>
+<li>在执行DELETE时，InnoDB不会重新建立表，而是一行一行的删除，如果确保没问题可以使用truncate操作</li>
+<li>InnoDB可以使用sphinx插件支持全文索引，并且效果更好。</li>
+<li>MyISAM强调的是性能，每次查询具有原子性,其执行数度比InnoDB类型更快</li>
+</ol>
 
             </article>
           </div>
@@ -217,7 +252,7 @@
             <nav class="navigation pagination" role="navigation">
               <h2 class="screen-reader-text">Posts navigation</h2>
               <div class="nav-links">
-                <a class="next page-numbers" href="https://xsctx7788.github.io//post/golang-grpc">下一篇->Golang安装gRPC</a>
+                <a class="next page-numbers" href="https://xsctx7788.github.io//post/daily-20190411">下一篇->每日集问</a>
               </div>
             </nav>
           
