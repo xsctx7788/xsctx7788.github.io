@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>Golang安装gRPC | 日技</title>
-<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1561945294376">
+<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1562031177809">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -153,7 +153,7 @@
               <p>Mac环境下Golang安装gRPC</p>
  <!-- more -->
 <h4 id="官方安装命令">官方安装命令：</h4>
-<pre><code>go get google.golang.org/grpc
+<pre><code class="language-go">go get google.golang.org/grpc
 </code></pre>
 <p>但是这样安装是装不上的</p>
 <blockquote>
@@ -162,14 +162,14 @@
 <p>由于国内的网络原因，并且代码已经转移到github上面了，但是代码里面的包依赖还是没有修改，还是google.golang.org这种，所以不能使用go get的方式安装（当然翻墙之后就可以了）。
 因此我们介绍不需要翻墙的安装方法：</p>
 <h4 id="在-gopath-下创建-googlegolangorg-目录">在 GOPATH 下创建 google.golang.org 目录</h4>
-<pre><code>mkdir -p $GOPATH/src/google.golang.org/
+<pre><code class="language-git">mkdir -p $GOPATH/src/google.golang.org/
 cd $GOPATH/src/google.golang.org/
 </code></pre>
 <h4 id="拉取源代码">拉取源代码</h4>
-<pre><code>git clone https://github.com/grpc/grpc-go grpc
+<pre><code class="language-git">git clone https://github.com/grpc/grpc-go grpc
 </code></pre>
 <p>这时我们去执行安装命令</p>
-<pre><code>go install google.golang.org/grpc
+<pre><code class="language-go">go install google.golang.org/grpc
 </code></pre>
 <p>会提示丢失了一些安装包，类似：</p>
 <blockquote>
@@ -215,7 +215,7 @@ git clone https://github.com/golang/crypto.git
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1561945294376" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1562031177809" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://xsctx7788.github.io/'>arisen</a> </span>
             </div>
             <div class="bio">
