@@ -1,0 +1,386 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<title>Mysql学习笔记一：一条SQL查询语句是如何执行的 | 日技</title>
+<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1562327054248">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142843675-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-142843675-1');
+</script>
+
+
+</head>
+<body class="home blog ct-body standard">
+<div id="overflow-container" class="overflow-container">
+  <a class="skip-content" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header" role="banner">
+    <div class='top-navigation top-navigation-important'>
+        <div class='container'>
+            <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+                <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+                <div class="menu">
+                    <ul id="menu-secondary-items" class="menu-secondary-items">
+                        
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://xsctx7788.github.io//tag/sql">Mysql</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://xsctx7788.github.io//tag/daily">daily</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://xsctx7788.github.io//tag/go">go</a>
+                        </li>
+                            
+                        
+                    </ul>
+                </div>
+            </div>
+            <ul class="social-media-icons">
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="title-info" class="title-info">
+            <div id='site-title' class='site-title'>
+                <a href="https://xsctx7788.github.io/">  日技 </a>
+            </div>
+        </div>
+        <button id="toggle-navigation" class="toggle-navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+        <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+            <p class="site-description">温故而知新</p>
+            <div class="menu">
+                <ul id="menu-primary-items" class="menu-primary-items">
+                     
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/">首页</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/archives">归档</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/tags">标签</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/post/about">关于</a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</header>
+
+
+  <div id="main" class="main" role="main">
+    <div id="loop-container" class="loop-container">
+      <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+        
+          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/mysqlstu-1.jpg">
+          </div>
+        
+
+        <div class="entry-meta">
+          <span class="date">· 2019-05-05 ·</span> <span> / </span>
+          <span class="author">
+            <a href="https://xsctx7788.github.io/" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
+          </span>
+          
+            <span class="category">
+                    <span> / </span>
+                    <a href="https://xsctx7788.github.io//tag/sql">Mysql</a>
+                </span>
+          
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'>Mysql学习笔记一：一条SQL查询语句是如何执行的</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>一条SQL查询语句是如何执行的</p>
+ <!-- more -->
+<p>执行一条简单的SQL语句：</p>
+<blockquote>
+<p>select * from T where ID=10</p>
+</blockquote>
+<p>输入一条语句，返回一个结果，但是这条语句在 MySQL 里是怎么执行的呢。</p>
+<ul>
+<li><a href="#1">基础介绍</a></li>
+<li><a href="#2">第一步：连接器</a></li>
+<li><a href="#3">第二步：查询缓存</a></li>
+<li><a href="#4">第三步：分析器</a></li>
+<li><a href="#5">第四步：优化器</a></li>
+<li><a href="#6">第五步：执行器</a></li>
+</ul>
+<h2 id="span-id1基础介绍span"><span id="1">基础介绍</span></h2>
+<p>首先先看一下 MySQL 的基本架构示意图。
+<img src="https://ws3.sinaimg.cn/large/005BYqpggy1g2cna7cnlij30te0n8mz9.jpg" alt="MySQL 的逻辑架构图"></p>
+<p>大体来说，MySQL 可以分为 Server 层和存储引擎层两部分。
+Server 层包括连接器、查询缓存、分析器、优化器、执行器等，涵盖 MySQL 的大多数核 心服务功能，以及所有的内置函数(如日期、时间、数学和加密函数等)，所有跨存储引 擎的功能都在这一层实现，比如存储过程、触发器、视图等。
+而存储引擎层负责数据的存储和提取。其架构模式是插件式的，支持 InnoDB、 MyISAM、Memory 等多个存储引擎。现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始成为了默认存储引擎。
+也就是说，你执行 create table 建表的时候，如果不指定引擎类型，默认使用的就是 InnoDB。不过，你也可以通过指定存储引擎的类型来选择别的引擎，比如在 create table 语句中使用 engine=memory, 来指定使用内存引擎创建表。不同存储引擎的表数据存取 方式不同，支持的功能也不同。
+从图中不难看出，不同的存储引擎共用一个** Server 层**，也就是从连接器到执行器的部分。 你可以先对每个组件的名字有个印象，接下来我会结合开头提到的那条 SQL 语句，带你走 一遍整个执行流程，依次看下每个组件的作用。</p>
+<h2 id="span-id2第一步-连接器span"><span id="2">第一步 连接器</span></h2>
+<p>首先我们要连接到数据库上，此时第一个遇到的就是连接器。连接器负责跟客户端
+建立连接、获取权限、维持和管理连接。连接命令一般是这么写的:</p>
+<blockquote>
+<p>mysql -h $ip -P $port -u $user -p
+输完命令之后，你就需要在交互对话里面输入密码。虽然密码也可以直接跟在 -p 后面写在命令行中，但这样可能会导致你的密码泄露。如果你连的是生产服务器，强烈建议你不要这么做。如果一定要写的话，-p和密码之间不能有空格。
+如果用户名或密码不对，你就会收到一个&quot;Access denied for user&quot;的错误，然后客户 端程序结束执行。
+如果用户名密码认证通过，连接器会到权限表里面查出你拥有的权限。之后，这个连接里面的权限判断逻辑，都将依赖于此时读到的权限。
+这就意味着，一个用户成功建立连接后，即使你用管理员账号对这个用户的权限做了修改，也不会影响已经存在连接的权限。修改完成后，只有再新建的连接才会使用新的权限设置。
+连接完成后，如果你没有后续的动作，这个连接就处于空闲状态，你可以在 show processlist 命令中看到它。其中如果 Command 列显示为“Sleep”的这一行，就表示现在系统里面有一个空闲连接。
+<img src="https://ws3.sinaimg.cn/large/005BYqpggy1g2cprs7fw7j314w0cadgz.jpg" alt="MySQL用户链接图">
+客户端如果太长时间没动静，连接器就会自动将它断开。这个时间是由参数 wait_timeout 控制的，默认值是 8 小时。
+wait_timeout 是客户端<strong>非交互式</strong>的连接时间，如果程序连接mysql SERVER，是<strong>交互</strong>连接,关联的时间参数为interactive_timeout, 这两个时间参数尽量设置成相同。值的话取决于业务。如果是成熟的开发(比如公司内部团队)，可以设置小些，分钟级别就行
+如果在连接被断开之后，客户端再次发送请求的话，就会收到一个错误提醒: Lost connection to MySQL server during query。这时候如果你要继续，就需要重连，然后 再执行请求了。
+数据库里面，<font color=red>长连接</font>是指连接成功后，如果客户端持续有请求，则一直使用同一个连接。<font color=red>短连接</font>则是指每次执行完很少的几次查询就断开连接，下次查询再重新建立一个。
+建立连接的过程通常是比较复杂的，所以我建议你在使用中要尽量减少建立连接的动作，也就是尽量使用长连接。但是全部使用长连接后，你可能会发现，有些时候 MySQL 占用内存涨得特别快，这是因 为 MySQL 在执行过程中临时使用的内存是管理在连接对象里面的。这些资源会在连接断 开的时候才释放。所以如果长连接累积下来，可能导致内存占用太大，被系统强行杀掉 (OOM)，从现象看就是 MySQL 异常重启了。
+怎么解决这个问题呢?可以考虑以下两种方案。</p>
+</blockquote>
+<ol>
+<li>定期断开长连接。使用一段时间，或者程序里面判断执行过一个占用内存的大查询后， 断开连接，之后要查询再重连。</li>
+<li>如果你用的是 MySQL 5.7 或更新版本，可以在每次执行一个比较大的操作后，通过执 行 mysql_reset_connection 来重新初始化连接资源。这个过程不需要重连和重新做权 限验证，但是会将连接恢复到刚刚创建完时的状态。</li>
+</ol>
+<h2 id="span-id3第二步查询缓存span"><span id="3">第二步：查询缓存</span></h2>
+<p>对于这个功能，首先是不建议使用，其次是 MySQL 8.0 版本直接将查询缓存的整块功能删掉了，也就是说 8.0 开始彻底没有这个功能了。
+所谓的查询缓存，就是MySQL拿到一个查询请求后，会先到查询缓存看看，之前是不是执行过这条语句。之前执行过的语句及其结果可能会以key-value对的形式，被直接缓存在内存中。key是查询的语句，value是查询的结果。如果你的查询能够直接在这个缓存中找到key，那么这个value就会被直接返回给客户端。
+如果语句不在查询缓存中，就会继续后面的执行阶段。执行完成后，执行结果会被存入查询缓存中。你可以看到，如果查询命中缓存，MySQL不需要执行后面的复杂操作，就可以直接返回结果，这个效率会很高。
+那么为什么不建议呢，从生效的过程中我们可以发现问题，结果是以key-value的形式缓存起来的，这意味着缓存的结果时效性非常差，而且只要这个表做出了更新，那么之前建立的所有关于这个表的查询缓存都会被清空掉，除非是一张静态表，否则的话基本上是毫无意义的操作。</p>
+<h2 id="span-id4第三步分析器span"><span id="4">第三步：分析器</span></h2>
+<p>那么跳过查询缓存，我们进入到分析器这里。MySQL需要知道你要做什么，因此需要对SQL语句做解析。
+分析器先会做**“词法分析”<strong>。你输入的是由多个字符串和空格组成的一条SQL语句，MySQL 需要识别出里面的字符串分别是什么，代表什么。
+MySQL 从你输入的&quot;select&quot;这个关键字识别出来，这是一个查询语句。它也要把字符 串“T”识别成“表名 T”，把字符串“ID”识别成“列 ID”。
+做完了这些识别以后，就要做</strong>“语法分析”<strong>。根据词法分析的结果，语法分析器会根据语 法规则，判断你输入的这个 SQL 语句是否满足 MySQL 语法，包括</strong>判断语句是否正确，表是否存在，列是否存在**。
+如果你的语句不对，就会收到“You have an error in your SQL syntax”的错误提醒，比如下面这个语句 select 少打了开头的字母“s”。
+<img src="./_image/2019-04-25-14-09-45.png" alt="">
+一般语法错误会提示第一个出现错误的位置，所以你要关注的是紧接“use near”的内容。</p>
+<h2 id="span-id5第四步优化器span"><span id="5">第四步：优化器</span></h2>
+<p>经过了分析器，MySQL 就知道你要做什么了。但是在真正开始执行之前，还要先经过优化器的处理。
+优化器是在表里面有多个索引的时候，决定使用哪个索引，或者在一个语句有多表关联 (join)的时候，决定各个表的连接顺序。比如你执行下面这样的语句，这个语句是执行 两个表的 join:</p>
+<blockquote>
+<p><font color=red>mysql&gt; select * from t1 join t2 using(ID) where t1.c=10 and t2.d=20;</font>
+既可以先从 表t1 里面取出 c=10 的记录的 ID 值，再根据 ID 值关联到 表t2，再判断 t2 里面 d 的值是否等于 20。
+也可以先从表 t2 里面取出 d=20 的记录的 ID 值，再根据 ID 值关联到 t1，再判断 t1 里面 c 的值是否等于 10。
+这两种执行方法的逻辑结果是一样的，但是执行的效率会有不同，而优化器的作用就是决
+定选择使用哪一个方案。
+优化器阶段完成后，这个语句的执行方案就确定下来了，然后进入执行器阶段。</p>
+</blockquote>
+<h2 id="span-id6第五步执行器span"><span id="6">第五步：执行器</span></h2>
+<p>MySQL 通过分析器知道了你要做什么，通过优化器知道了该怎么做，于是就进入了执行器阶段，开始执行语句。
+开始执行的时候，要先判断一下你对这个表 T 有没有执行查询的权限，如果没有，就会返 回没有权限的错误，如下所示 (在工程实现上，如果命中查询缓存，会在查询缓存返回结果的时候，做权限验证。查询也会在优化器之前调用 precheck 验证权限)。</p>
+<blockquote>
+<p><font color=red>mysql&gt; select * from T where ID=10;
+ERROR 1142 (42000): SELECT command denied to user 'b'@'localhost' for table 'T'</font>
+如果有权限，就打开表继续执行。打开表的时候，执行器就会根据表的引擎定义，去使用
+这个引擎提供的接口。
+比如我们这个例子中的表 T 中，ID 字段没有索引，那么执行器的执行流程是这样的:</p>
+</blockquote>
+<ol>
+<li>调用 InnoDB 引擎接口取这个表的第一行，判断 ID 值是不是 10，如果不是则跳过，如 果是则将这行存在结果集中;</li>
+<li>调用引擎接口取“下一行”，重复相同的判断逻辑，直到取到这个表的最后一行。 3. 执行器将上述遍历过程中所有满足条件的行组成的记录集作为结果集返回给客户端。
+至此，这个语句就执行完成了。
+对于有索引的表，执行的逻辑也差不多。第一次调用的是“取满足条件的第一行”这个接
+口，之后循环取“满足条件的下一行”这个接口，这些接口都是引擎中已经定义好的。
+可以在数据库的慢查询日志中看到一个 rows_examined 的字段，表示这个语句执行过程 中扫描了多少行。这个值就是在执行器每次调用引擎获取数据行的时候累加的。
+在有些场景下，执行器调用一次，在引擎内部则扫描了多行，因此引擎扫描行数跟 rows_examined 并不是完全相同的。具体细节现在还不清楚，后面继续学习。</li>
+</ol>
+
+            </article>
+          </div>
+          <div class='entry-meta-bottom'>
+            <div class="entry-categories">
+              <p>
+                <span>Categories</span>
+                
+                  
+                    
+                  <a href="https://xsctx7788.github.io//tag/sql" title="View all posts in Mysql">Mysql</a>
+                    
+                    
+                    
+                  <a href="https://xsctx7788.github.io//tag/daily" title="View all posts in daily">daily</a>
+                    
+                    
+                    
+                  <a href="https://xsctx7788.github.io//tag/go" title="View all posts in go">go</a>
+                    
+                    
+              </p>
+            </div>
+            <div class="entry-tags">
+              <p><span>Tags</span>
+              </p>
+            </div>
+          </div>
+          <div class="author-meta">
+            <div class="author">
+              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1562327054248" class='avatar avatar-72 photo' height='72' width='72'>
+              <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://xsctx7788.github.io/'>arisen</a> </span>
+            </div>
+            <div class="bio">
+              <p></p>
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            </div>
+          </div>
+        </div>
+          
+            <nav class="navigation pagination" role="navigation">
+              <h2 class="screen-reader-text">Posts navigation</h2>
+              <div class="nav-links">
+                <a class="next page-numbers" href="https://xsctx7788.github.io//post/daily-20190502">下一篇->每日集问-2019-05-02</a>
+              </div>
+            </nav>
+          
+      </div>
+      <section id="comments" class="comments">
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '403969d3b8d5bcb9d480',
+    clientSecret: 'e36e54d0e2b5dd9c52d190352a637e2f553cb559',
+    repo: 'xsctx7788.github.io',
+    owner: 'xsctx7788',
+    admin: ['xsctx7788'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+      </section>
+    </div>
+  </div>
+  <footer id="site-footer" class="site-footer" role="contentinfo">
+    <h1>
+        <a href="https://xsctx7788.github.io/"> 日技 </a>
+    </h1>
+    <p class="site-description">温故而知新</p>
+    <div id="menu-footer" class="menu-container menu-footer" role="navigation">
+        <div class="menu">
+            <ul id="menu-footer-items" class="menu-footer-items">
+            </ul>
+        </div>
+    </div>
+    <ul class="social-media-icons">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </ul>
+    <div class="design-credit">
+        <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></p>
+    </div>
+</footer>
+<script>
+    hljs.initHighlightingOnLoad()
+</script>
+<script src="https://xsctx7788.github.io//media/scripts/lib/jquery.min.js"></script>
+<script src="https://xsctx7788.github.io//media/scripts/lib/jquerymigrate.js"></script>
+<script src="https://xsctx7788.github.io//media/scripts/lib/production.min.js"></script>
+
+</div>
+</body>
+</html>
+
