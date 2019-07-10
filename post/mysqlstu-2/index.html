@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>Golang安装gRPC | 日技</title>
+<title>Mysql学习笔记二 | 日技</title>
 <link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1562723809975">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
@@ -134,67 +134,56 @@
     <div id="loop-container" class="loop-container">
       <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
         
-          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/golang-grpc.jpg">
+          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/mysqlstu-2.jpg">
           </div>
         
 
         <div class="entry-meta">
-          <span class="date">· 2019-04-09 ·</span> <span> / </span>
+          <span class="date">· 2019-05-12 ·</span> <span> / </span>
           <span class="author">
             <a href="https://xsctx7788.github.io/" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
           
             <span class="category">
                     <span> / </span>
-                    <a href="https://xsctx7788.github.io//tag/go">go</a>
+                    <a href="https://xsctx7788.github.io//tag/sql">Mysql</a>
                 </span>
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'>Golang安装gRPC</h1>
+          <h1 class='entry-title'>Mysql学习笔记二</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>Mac环境下Golang安装gRPC</p>
- <!-- more -->
-<h4 id="官方安装命令">官方安装命令：</h4>
-<pre><code class="language-go">go get google.golang.org/grpc
-</code></pre>
-<p>但是这样安装是装不上的</p>
+              <p>一条SQL更新语句是如何执行的</p>
+<!-- more --> 
+<p>之前学习了一个查询语句的执行流程，并介绍了执行过程中涉及的处理模块。一条查询语句的执行过程一般是经过连接器、分析器、优化器、执行器等功能模块，最后到达存储引擎。
+那么，一条更新语句的执行流程又是怎样的呢?
+你可能经常听同事说，MySQL 可以恢复到半个月内任意一秒的状态，惊叹的同时，心中也会不免会好奇，这是怎样做到的呢?
+我们还是从一个表的一条更新语句说起，下面是这个表的创建语句，这个表有一个主键 ID 和一个整型字段 c:</p>
 <blockquote>
-<p>package google.golang.org/grpc: unrecognized import path &quot;google.golang.org/grpc&quot;(https fetch: Get https://google.golang.org/grpc?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</p>
+<p>mysql&gt; create table T(ID int primary key, c int);</p>
 </blockquote>
-<p>由于国内的网络原因，并且代码已经转移到github上面了，但是代码里面的包依赖还是没有修改，还是google.golang.org这种，所以不能使用go get的方式安装（当然翻墙之后就可以了）。
-因此我们介绍不需要翻墙的安装方法：</p>
-<h4 id="在-gopath-下创建-googlegolangorg-目录">在 GOPATH 下创建 google.golang.org 目录</h4>
-<pre><code class="language-git">mkdir -p $GOPATH/src/google.golang.org/
-cd $GOPATH/src/google.golang.org/
-</code></pre>
-<h4 id="拉取源代码">拉取源代码</h4>
-<pre><code class="language-git">git clone https://github.com/grpc/grpc-go grpc
-</code></pre>
-<p>这时我们去执行安装命令</p>
-<pre><code class="language-go">go install google.golang.org/grpc
-</code></pre>
-<p>会提示丢失了一些安装包，类似：</p>
+<p>如果要将 ID=2 这一行的值加 1，SQL 语句就会这么写:</p>
 <blockquote>
-<p>grpc/internal/transport/controlbuf.go:27:2: cannot find package &quot;golang.org/x/net/http2&quot; in any of:
-/home/dc2-user/go/src/golang.org/x/net/http2 (from $GOROOT)
-/home/dc2-user/gopath/src/golang.org/x/net/http2 (from $GOPATH)
-grpc/internal/transport/controlbuf.go:28:2: cannot find package &quot;golang.org/x/net/http2/hpack&quot; in any of:
-/home/dc2-user/go/src/golang.org/x/net/http2/hpack (from $GOROOT)
-/home/dc2-user/gopath/src/golang.org/x/net/http2/hpack (from $GOPATH)</p>
+<p>mysql&gt; update T set c=c+1 where ID=2;</p>
 </blockquote>
-<p>根据提示去安装对应的包即可。</p>
-<h4 id="安装-golangorgx安装对应的即可">安装 golang.org/x/*（安装对应的即可）</h4>
-<pre><code>git clone https://github.com/golang/sys.git 
-git clone https://github.com/golang/net.git 
-git clone https://github.com/golang/text.git 
-git clone https://github.com/golang/lint.git 
-git clone https://github.com/golang/tools.git 
-git clone https://github.com/golang/crypto.git
-</code></pre>
+<p>按照之前查询语句的逻辑，更新语句也是同样会走一遍。
+与查询流程不一样的是，更新流程还涉及两个重要的日志模块，它们正是我们今天要讨论 的主角:**redo log(重做日志)**和 <strong>binlog(归档日志)</strong>。如果接触 MySQL，那这两个词肯定是绕不过的，redo log 和 binlog 在设计上有很多有意思的地方，这些设计思路也可以用到你自己的程序里。</p>
+<h2 id="重要的日志模块redo-log">重要的日志模块：redo log</h2>
+<p>一般我们进行数据操作的时候，常见的操作有两种：</p>
+<ul>
+<li>一种是直接对数据做出修改</li>
+<li>另一种是先把所有的操作记录下来，然后统一修改
+同样，在 MySQL 里也有这个问题，如果每一次的更新操作都需要写进磁盘，然后磁盘也 要找到对应的那条记录，然后再更新，整个过程 IO 成本、查找成本都很高。为了解决这个问题，MySQL 的设计者设计出了经常说到的 <strong>WAL 技术</strong>，WAL 的全称是 Write-Ahead Logging，它的关键点就是先写日志，再写磁盘。
+具体来说，当有一条记录需要更新的时候，InnoDB 引擎就会先把记录写到 redo log里面，并更新内存，这个时候更新就算完成了。同时，InnoDB 引擎会在适当的时候，将这个操作记录更新到磁盘里面，而这个更新往往是在系统比较空闲的时候做。
+InnoDB 的 redo log 是固定大小的，比如可以配置为一组 4 个文件，每个文 件的大小是 1GB，那么总共就可以记录 4GB 的操作。从头开始写，写到末 尾就又回到开头循环写，如下面这个图所示。
+<img src="./_image/2019-04-27-11-02-04.png" alt="">
+write pos 是当前记录的位置，一边写一边后移，写到第 3 号文件末尾后就回到 0 号文件 开头。checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录 更新到数据文件。
+write pos 和 checkpoint 之间的是还空着的部分，可以用来记录新的操作。如果 write pos 追上 checkpoint，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint 推进一下。
+有了 redo log，InnoDB 就可以保证即使数据库发生异常重启，之前提交的记录都不会丢 失，这个能力称为<strong>crash-safe</strong>。</li>
+</ul>
 
             </article>
           </div>
@@ -254,7 +243,7 @@ git clone https://github.com/golang/crypto.git
             <nav class="navigation pagination" role="navigation">
               <h2 class="screen-reader-text">Posts navigation</h2>
               <div class="nav-links">
-                <a class="next page-numbers" href="https://xsctx7788.github.io//post/go-50">下一篇->Go的50个常见错误（更新中）</a>
+                <a class="next page-numbers" href="https://xsctx7788.github.io//post/mysqlstu-1">下一篇->Mysql学习笔记一：一条SQL查询语句是如何执行的</a>
               </div>
             </nav>
           
