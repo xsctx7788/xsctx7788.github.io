@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>每日集问-2019-04-28 | 日技</title>
-<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1562723809975">
+<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1565604610676">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -177,8 +177,10 @@
 </ul>
 <h1 id="session与cookie的区别">session与cookie的区别?</h1>
 <ul>
-<li>session：存储在服务器上的php指定的目录中的（session_dir）的位置</li>
-<li>cookie：存储在客户端，对于Cookie来说是存储在用户WIN的Temp目录中的。</li>
+<li>cookie只能保存字符串，session不仅仅是字符串，还可以是对象，布尔值等等基本数据类型</li>
+<li>cookie是储存在客户端的，session是储存在服务器端的</li>
+<li>生命周期不同，同一个cookie文件可以有多个键值对并且设置不同的过期时间，而session是统一的时间控制Session文件，cookie在没有设置有限时间的情况下只要浏览器关闭就会失效，而session有默认的时间，1440秒（24分钟）。</li>
+<li>cookie与session有千丝万缕的关系，每个Session数据都应该对应一个sessionID，而SessionID又是由cookie带过来的</li>
 </ul>
 
             </article>
@@ -210,7 +212,7 @@
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1562723809975" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1565604610676" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://xsctx7788.github.io/'>arisen</a> </span>
             </div>
             <div class="bio">

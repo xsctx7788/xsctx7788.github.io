@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>Golang安装gRPC | 日技</title>
-<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1562723809975">
+<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1565604610676">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -165,7 +165,7 @@
 <blockquote>
 <p>package google.golang.org/grpc: unrecognized import path &quot;google.golang.org/grpc&quot;(https fetch: Get https://google.golang.org/grpc?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</p>
 </blockquote>
-<p>由于国内的网络原因，并且代码已经转移到github上面了，但是代码里面的包依赖还是没有修改，还是google.golang.org这种，所以不能使用go get的方式安装（当然翻墙之后就可以了）。
+<p>由于国内的网络原因，并且代码已经转移到github上面了，但是代码里面的包依赖还是没有修改，还是google.golang.org这种，所以不能使用go get的方式安装（当然翻墙之后就可以了）。<br>
 因此我们介绍不需要翻墙的安装方法：</p>
 <h4 id="在-gopath-下创建-googlegolangorg-目录">在 GOPATH 下创建 google.golang.org 目录</h4>
 <pre><code class="language-git">mkdir -p $GOPATH/src/google.golang.org/
@@ -179,11 +179,11 @@ cd $GOPATH/src/google.golang.org/
 </code></pre>
 <p>会提示丢失了一些安装包，类似：</p>
 <blockquote>
-<p>grpc/internal/transport/controlbuf.go:27:2: cannot find package &quot;golang.org/x/net/http2&quot; in any of:
-/home/dc2-user/go/src/golang.org/x/net/http2 (from $GOROOT)
-/home/dc2-user/gopath/src/golang.org/x/net/http2 (from $GOPATH)
-grpc/internal/transport/controlbuf.go:28:2: cannot find package &quot;golang.org/x/net/http2/hpack&quot; in any of:
-/home/dc2-user/go/src/golang.org/x/net/http2/hpack (from $GOROOT)
+<p>grpc/internal/transport/controlbuf.go:27:2: cannot find package &quot;golang.org/x/net/http2&quot; in any of:<br>
+/home/dc2-user/go/src/golang.org/x/net/http2 (from $GOROOT)<br>
+/home/dc2-user/gopath/src/golang.org/x/net/http2 (from $GOPATH)<br>
+grpc/internal/transport/controlbuf.go:28:2: cannot find package &quot;golang.org/x/net/http2/hpack&quot; in any of:<br>
+/home/dc2-user/go/src/golang.org/x/net/http2/hpack (from $GOROOT)<br>
 /home/dc2-user/gopath/src/golang.org/x/net/http2/hpack (from $GOPATH)</p>
 </blockquote>
 <p>根据提示去安装对应的包即可。</p>
@@ -225,7 +225,7 @@ git clone https://github.com/golang/crypto.git
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1562723809975" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1565604610676" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://xsctx7788.github.io/'>arisen</a> </span>
             </div>
             <div class="bio">
