@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title> 每日集问-2019-04-30 | 日技</title>
+<title>每日集问-2019-05-18 | 日技</title>
 <link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1565690698677">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
@@ -134,12 +134,12 @@
     <div id="loop-container" class="loop-container">
       <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
         
-          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-20190430.jpg">
+          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-2019-05-18.jpg">
           </div>
         
 
         <div class="entry-meta">
-          <span class="date">· 2019-04-30 ·</span> <span> / </span>
+          <span class="date">· 2019-05-18 ·</span> <span> / </span>
           <span class="author">
             <a href="https://xsctx7788.github.io/" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
@@ -151,31 +151,37 @@
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'> 每日集问-2019-04-30</h1>
+          <h1 class='entry-title'>每日集问-2019-05-18</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>传值与传引用、大流量访问、include和require</p>
- <!-- more -->
-<h1 id="php中传值与传引用的区别什么时候传值什么时候传引用">php中传值与传引用的区别？什么时候传值什么时候传引用？</h1>
+              <p>数组函数,关键字的区别,varchar和char</p>
+<!-- more -->
+<h1 id="常用的php数组函数">常用的PHP数组函数</h1>
 <ul>
-<li>按值传递：函数内对值的任何改变在函数外部都会被忽略。</li>
-<li>引用传递：函数内对值的任何改变在函数外部也能反映出这些修改。</li>
-<li>应用场景：按值传递时，php必须复制值，而按引用传递则不需要复制值，故引用传递一般用于大字符串或对象。</li>
+<li>array_chunk()把一个数组分割为新的数组块</li>
+<li>array_column()返回输入数组中某个单一列的值</li>
+<li>array_combine()通过合并两个数组来创建一个新数组</li>
+<li>array_diff()比较数组，返回差集（只比较键值）</li>
+<li>array_flip()交换数组中的键和值</li>
+<li>array_keys()返回数组中所有的键名</li>
+<li>array_merge()把一个或多个数组合并为一个数组</li>
+<li>array_pop()删除数组的最后一个元素</li>
 </ul>
-<h1 id="对于大流量的网站您采用什么样的方法来解决访问量问题">对于大流量的网站,您采用什么样的方法来解决访问量问题?</h1>
+<h1 id="public-protected-private的区别">public、protected、private的区别</h1>
 <ul>
-<li>确认服务器硬件是否足够支持当前的流量</li>
-<li>数据库读写分离,优化数据表</li>
-<li>程序功能规则,禁止外部的盗链,控制大文件的下载</li>
-<li>使用不同主机分流主要流量</li>
+<li>public 表示全局，类内部外部子类都可以访问；</li>
+<li>private表示私有的，只有本类内部可以使用；</li>
+<li>protected表示受保护的，只有本类或子类或父类中可以访问</li>
 </ul>
-<h1 id="语句include和require的区别是什么为避免多次包含同一文件可用什么语句代替它们">语句include和require的区别是什么?为避免多次包含同一文件，可用什么语句代替它们?</h1>
+<h1 id="mysql里varchar和char的区别">mysql里varchar和char的区别</h1>
 <ul>
-<li>require：无条件包含，即在一个流程里的require,无论条件成立与否都会先执行。当包含文件不存在或语法错误致命错误时，会终止程序执行。</li>
-<li>include：有返回值，当包含文件不存在或语法错误致命错误，不会终止程序执行。<br>
-可以使用include_once();或require_once();代替。</li>
+<li>varchar的长度是可变的，char的长度不可变。</li>
+<li>在获取数据时，char类型的数据需要使用trim()方法，去掉字符串后面多余的空格。但varchar不需要。</li>
+<li>存储时，char类型的数据要比varchar类型的数据速度更快，因为其长度固定，方便存储于查找。</li>
+<li>char是以空间换取时间效率，而varchar是以空间效率为首位的。</li>
+<li>char的存储方式是，对英文字符（ASCII）占用1个字节，对一个汉字占用两个字节；而varchar的存储方式是，对每个英文字符占用2个字节，汉字也占用2个字节，两者的存储数据都非unicode的字符数据。</li>
 </ul>
 
             </article>
@@ -232,13 +238,6 @@
             </div>
           </div>
         </div>
-          
-            <nav class="navigation pagination" role="navigation">
-              <h2 class="screen-reader-text">Posts navigation</h2>
-              <div class="nav-links">
-                <a class="next page-numbers" href="https://xsctx7788.github.io//post/daily-20190428">下一篇->每日集问-2019-04-28</a>
-              </div>
-            </nav>
           
       </div>
       <section id="comments" class="comments">

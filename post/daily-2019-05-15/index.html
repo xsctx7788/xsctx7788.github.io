@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title> 每日集问-2019-04-30 | 日技</title>
+<title>每日集问-2019-05-15 | 日技</title>
 <link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1565690698677">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
@@ -134,12 +134,12 @@
     <div id="loop-container" class="loop-container">
       <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
         
-          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-20190430.jpg">
+          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-2019-05-15.jpg">
           </div>
         
 
         <div class="entry-meta">
-          <span class="date">· 2019-04-30 ·</span> <span> / </span>
+          <span class="date">· 2019-05-15 ·</span> <span> / </span>
           <span class="author">
             <a href="https://xsctx7788.github.io/" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
@@ -151,32 +151,38 @@
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'> 每日集问-2019-04-30</h1>
+          <h1 class='entry-title'>每日集问-2019-05-15</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>传值与传引用、大流量访问、include和require</p>
- <!-- more -->
-<h1 id="php中传值与传引用的区别什么时候传值什么时候传引用">php中传值与传引用的区别？什么时候传值什么时候传引用？</h1>
+              <p>空值区分，单双引号，读取文件</p>
+<!-- more --> 
+<h1 id="null0false0的区别如何判断">null,0,'',false,‘0’的区别，如何判断</h1>
 <ul>
-<li>按值传递：函数内对值的任何改变在函数外部都会被忽略。</li>
-<li>引用传递：函数内对值的任何改变在函数外部也能反映出这些修改。</li>
-<li>应用场景：按值传递时，php必须复制值，而按引用传递则不需要复制值，故引用传递一般用于大字符串或对象。</li>
+<li>empty操作以上五个变量，都返回false</li>
+<li>null为不存在之意：php底层的zval空间里没有存其value值，只存储了一个type标志其 IS_NULL(所以解释了 empty(null)=true，isset(null)=false ，isset('')=true)</li>
+<li>其他四个为存在，php底层是开辟zval空间存储，有value,有type</li>
+<li>string '0'与 string '' 不相等</li>
+<li>int 0 却和 string '' 相等</li>
+<li>string '0' 与 null 不相等</li>
+<li>int 0 与 null 相等</li>
 </ul>
-<h1 id="对于大流量的网站您采用什么样的方法来解决访问量问题">对于大流量的网站,您采用什么样的方法来解决访问量问题?</h1>
+<h1 id="php中单引号和双引号的区别">PHP中单引号和双引号的区别</h1>
 <ul>
-<li>确认服务器硬件是否足够支持当前的流量</li>
-<li>数据库读写分离,优化数据表</li>
-<li>程序功能规则,禁止外部的盗链,控制大文件的下载</li>
-<li>使用不同主机分流主要流量</li>
+<li>单引号的运行速度会比较快，双引号会比较慢，原因在于双引号要先查找语句中是否有变量，而单引号则不用</li>
+<li>双引号内的变量会解释出值，但是在单引号内则不做处理，直接输出</li>
+<li>单引号：只转义单引号 ” 和 \ ;</li>
+<li>双引号：可以转义大量的特殊符号</li>
 </ul>
-<h1 id="语句include和require的区别是什么为避免多次包含同一文件可用什么语句代替它们">语句include和require的区别是什么?为避免多次包含同一文件，可用什么语句代替它们?</h1>
-<ul>
-<li>require：无条件包含，即在一个流程里的require,无论条件成立与否都会先执行。当包含文件不存在或语法错误致命错误时，会终止程序执行。</li>
-<li>include：有返回值，当包含文件不存在或语法错误致命错误，不会终止程序执行。<br>
-可以使用include_once();或require_once();代替。</li>
-</ul>
+<h1 id="php读取文件内容的方法">PHP读取文件内容的方法</h1>
+<pre><code class="language-php">    $file_path = &quot;test.txt&quot;;
+    $fp = fopen($file_path,&quot;r&quot;); 
+    $str = fread($fp,filesize($file_path));
+</code></pre>
+<pre><code class="language-php">    $file_path = &quot;test.txt&quot;;
+    $str = file_get_contents($file_path);
+</code></pre>
 
             </article>
           </div>
@@ -232,13 +238,6 @@
             </div>
           </div>
         </div>
-          
-            <nav class="navigation pagination" role="navigation">
-              <h2 class="screen-reader-text">Posts navigation</h2>
-              <div class="nav-links">
-                <a class="next page-numbers" href="https://xsctx7788.github.io//post/daily-20190428">下一篇->每日集问-2019-04-28</a>
-              </div>
-            </nav>
           
       </div>
       <section id="comments" class="comments">
