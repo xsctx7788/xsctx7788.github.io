@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>Golang安装gRPC | 日技</title>
+<title> 每日集问-2019-05-21 | 日技</title>
 <link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1565780283880">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
@@ -134,67 +134,46 @@
     <div id="loop-container" class="loop-container">
       <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
         
-          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/golang-grpc.jpg">
+          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-2019-05-21.jpg">
           </div>
         
 
         <div class="entry-meta">
-          <span class="date">· 2019-04-09 ·</span> <span> / </span>
+          <span class="date">· 2019-05-21 ·</span> <span> / </span>
           <span class="author">
             <a href="https://xsctx7788.github.io/" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
           
             <span class="category">
                     <span> / </span>
-                    <a href="https://xsctx7788.github.io//tag/go">go</a>
+                    <a href="https://xsctx7788.github.io//tag/daily">daily</a>
                 </span>
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'>Golang安装gRPC</h1>
+          <h1 class='entry-title'> 每日集问-2019-05-21</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>Mac环境下Golang安装gRPC</p>
- <!-- more -->
-<h4 id="官方安装命令">官方安装命令：</h4>
-<pre><code class="language-go">go get google.golang.org/grpc
-</code></pre>
-<p>但是这样安装是装不上的</p>
-<blockquote>
-<p>package google.golang.org/grpc: unrecognized import path &quot;google.golang.org/grpc&quot;(https fetch: Get https://google.golang.org/grpc?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</p>
-</blockquote>
-<p>由于国内的网络原因，并且代码已经转移到github上面了，但是代码里面的包依赖还是没有修改，还是google.golang.org这种，所以不能使用go get的方式安装（当然翻墙之后就可以了）。<br>
-因此我们介绍不需要翻墙的安装方法：</p>
-<h4 id="在-gopath-下创建-googlegolangorg-目录">在 GOPATH 下创建 google.golang.org 目录</h4>
-<pre><code class="language-git">mkdir -p $GOPATH/src/google.golang.org/
-cd $GOPATH/src/google.golang.org/
-</code></pre>
-<h4 id="拉取源代码">拉取源代码</h4>
-<pre><code class="language-git">git clone https://github.com/grpc/grpc-go grpc
-</code></pre>
-<p>这时我们去执行安装命令</p>
-<pre><code class="language-go">go install google.golang.org/grpc
-</code></pre>
-<p>会提示丢失了一些安装包，类似：</p>
-<blockquote>
-<p>grpc/internal/transport/controlbuf.go:27:2: cannot find package &quot;golang.org/x/net/http2&quot; in any of:<br>
-/home/dc2-user/go/src/golang.org/x/net/http2 (from $GOROOT)<br>
-/home/dc2-user/gopath/src/golang.org/x/net/http2 (from $GOPATH)<br>
-grpc/internal/transport/controlbuf.go:28:2: cannot find package &quot;golang.org/x/net/http2/hpack&quot; in any of:<br>
-/home/dc2-user/go/src/golang.org/x/net/http2/hpack (from $GOROOT)<br>
-/home/dc2-user/gopath/src/golang.org/x/net/http2/hpack (from $GOPATH)</p>
-</blockquote>
-<p>根据提示去安装对应的包即可。</p>
-<h4 id="安装-golangorgx安装对应的即可">安装 golang.org/x/*（安装对应的即可）</h4>
-<pre><code>git clone https://github.com/golang/sys.git 
-git clone https://github.com/golang/net.git 
-git clone https://github.com/golang/text.git 
-git clone https://github.com/golang/lint.git 
-git clone https://github.com/golang/tools.git 
-git clone https://github.com/golang/crypto.git
-</code></pre>
+              <p>fpm和cli,多机器session,mq</p>
+<!-- more -->
+<h1 id="fpm和cli模式">fpm和cli模式</h1>
+<ul>
+<li>nginx的PHP是fpm模式，crontab这种是cli模式。</li>
+<li>可以理解为cli是命令行版本，fpm是后台多进程服务版本，nginx和php-fpm通信来完成web服务的。</li>
+<li>从5.6版本开始自带，反正之前fpm是要自己装的，后来进官方包了就不用自己装了。</li>
+</ul>
+<h1 id="两台机器session问题怎么解决">两台机器session问题怎么解决</h1>
+<p>可以用redis，memcache，甚至可以用mysql，只要不是存在本地就可以</p>
+<h1 id="为什么使用-mq">为什么使用 MQ？</h1>
+<ul>
+<li>异步处理 - 相比于传统的串行、并行方式，提高了系统吞吐量。</li>
+<li>应用解耦 - 系统间通过消息通信，不用关心其他系统的处理。</li>
+<li>流量削锋 - 可以通过消息队列长度控制请求量；可以缓解短时间内的高并发请求。</li>
+<li>日志处理 - 解决大量日志传输。</li>
+<li>消息通讯 - 消息队列一般都内置了高效的通信机制，因此也可以用在纯的消息通讯。比如实现点对点消息队列，或者聊天室等。</li>
+</ul>
 
             </article>
           </div>
@@ -250,13 +229,6 @@ git clone https://github.com/golang/crypto.git
             </div>
           </div>
         </div>
-          
-            <nav class="navigation pagination" role="navigation">
-              <h2 class="screen-reader-text">Posts navigation</h2>
-              <div class="nav-links">
-                <a class="next page-numbers" href="https://xsctx7788.github.io//post/go-50">下一篇->Go的50个常见错误（更新中）</a>
-              </div>
-            </nav>
           
       </div>
       <section id="comments" class="comments">
