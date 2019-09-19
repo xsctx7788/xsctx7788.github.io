@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title> 每日集问-2019-05-21 | 日技</title>
+<title>每日集问-2019-09-18 | 日技</title>
 <link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1568858856967">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
@@ -134,12 +134,12 @@
     <div id="loop-container" class="loop-container">
       <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
         
-          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-2019-05-21.jpg">
+          <div class='featured-image lazy lazy-bg-image' data-background="https://xsctx7788.github.io//post-images/daily-2019-09-18.jpg">
           </div>
         
 
         <div class="entry-meta">
-          <span class="date">· 2019-05-21 ·</span> <span> / </span>
+          <span class="date">· 2019-09-18 ·</span> <span> / </span>
           <span class="author">
             <a href="https://xsctx7788.github.io/" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
@@ -151,28 +151,25 @@
           
         </div>
         <div class='entry-header'>
-          <h1 class='entry-title'> 每日集问-2019-05-21</h1>
+          <h1 class='entry-title'>每日集问-2019-09-18</h1>
         </div>
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              <p>fpm和cli,多机器session,mq</p>
+              <p>Expression #1 of SELECT list is not in GROUP BY</p>
 <!-- more -->
-<h1 id="fpm和cli模式">fpm和cli模式</h1>
+<h1 id="数据库出现expression-1-of-select-list-is-not-in-group-by-报错">数据库出现Expression #1 of SELECT list is not in GROUP BY 报错</h1>
+<p>在写代码的过程中，最近遇到一个问题，就是在执行 SQL 的时候一直报错，提示是Expression #1 of SELECT list is not in GROUP BY 。</p>
+<p>由于之前都没遇到过这种问题，于是去查了一下资料。</p>
+<p>首先导致问题的原因是 mysql 5.7.5 之后版本默认启用了 only_full_group_by SQL 模式，所以MySQL会不识别选择列表、条件或顺序列表引用的查询。也就是说，如果你 group by 的字段不在 select 中，那么就无法进行 group by。</p>
+<p>解决方法是：</p>
 <ul>
-<li>nginx的PHP是fpm模式，crontab这种是cli模式。</li>
-<li>可以理解为cli是命令行版本，fpm是后台多进程服务版本，nginx和php-fpm通信来完成web服务的。</li>
-<li>从5.6版本开始自带，反正之前fpm是要自己装的，后来进官方包了就不用自己装了。</li>
-</ul>
-<h1 id="两台机器session问题怎么解决">两台机器session问题怎么解决</h1>
-<p>可以用redis，memcache，甚至可以用mysql，只要不是存在本地就可以</p>
-<h1 id="为什么使用-mq">为什么使用 MQ？</h1>
-<ul>
-<li>异步处理 - 相比于传统的串行、并行方式，提高了系统吞吐量。</li>
-<li>应用解耦 - 系统间通过消息通信，不用关心其他系统的处理。</li>
-<li>流量削锋 - 可以通过消息队列长度控制请求量；可以缓解短时间内的高并发请求。</li>
-<li>日志处理 - 解决大量日志传输。</li>
-<li>消息通讯 - 消息队列一般都内置了高效的通信机制，因此也可以用在纯的消息通讯。比如实现点对点消息队列，或者聊天室等。</li>
+<li>登陆到服务器的mysql中</li>
+<li>输入<code>SHOW SESSION VARIABLES;</code> ， 查看sql_mode中是否有<code>ONLY_FULL_GROUP_BY;</code>属性</li>
+<li>如果有的话执行<code>set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';</code></li>
+<li>然后在查看一下是否已修改成功</li>
+<li>同样还有一个地方，<code>SHOW GLOBAL VARIABLES;</code></li>
+<li><code>set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';</code></li>
 </ul>
 
             </article>
@@ -233,7 +230,7 @@
             <nav class="navigation pagination" role="navigation">
               <h2 class="screen-reader-text">Posts navigation</h2>
               <div class="nav-links">
-                <a class="next page-numbers" href="https://xsctx7788.github.io//post/daily-2019-05-18">下一篇->每日集问-2019-05-18</a>
+                <a class="next page-numbers" href="https://xsctx7788.github.io//post/daily-2019-05-21">下一篇-> 每日集问-2019-05-21</a>
               </div>
             </nav>
           
