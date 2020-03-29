@@ -6,7 +6,7 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 <title>Mysql学习笔记二 | 日技</title>
-<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1568858856967">
+<link rel="shortcut icon" href="https://xsctx7788.github.io//favicon.ico?v=1585484736270">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xsctx7788.github.io//styles/main.css" type='text/css' media='all'>
 
@@ -41,19 +41,19 @@
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://xsctx7788.github.io//tag/daily">daily</a>
+                            <a href="https://xsctx7788.github.io/tag/daily/">daily</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://xsctx7788.github.io//tag/sql">Mysql</a>
+                            <a href="https://xsctx7788.github.io/tag/sql/">Mysql</a>
                         </li>
                             
                         
                             
                         <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
-                            <a href="https://xsctx7788.github.io//tag/go">go</a>
+                            <a href="https://xsctx7788.github.io/tag/go/">go</a>
                         </li>
                             
                         
@@ -146,7 +146,7 @@
           
             <span class="category">
                     <span> / </span>
-                    <a href="https://xsctx7788.github.io//tag/sql">Mysql</a>
+                    <a href="https://xsctx7788.github.io/tag/sql/">Mysql</a>
                 </span>
           
         </div>
@@ -180,7 +180,7 @@
 <p>同样，在 MySQL 里也有这个问题，如果每一次的更新操作都需要写进磁盘，然后磁盘也要找到对应的那条记录，然后再更新，整个过程 IO 成本、查找成本都很高。为了解决这个问题，MySQL 的设计者设计出了经常说到的 <strong>WAL 技术</strong>，WAL 的全称是 Write-Ahead Logging，它的关键点就是先写日志，再写磁盘。</p>
 <p>具体来说，当有一条记录需要更新的时候，InnoDB 引擎就会先把记录写到 redo log里面，并更新内存，这个时候更新就算完成了。同时，InnoDB 引擎会在适当的时候，将这个操作记录更新到磁盘里面，而这个更新往往是在系统比较空闲的时候做。</p>
 <p>InnoDB 的 redo log 是固定大小的，比如可以配置为一组 4 个文件，每个文 件的大小是 1GB，那么总共就可以记录 4GB 的操作。从头开始写，写到末 尾就又回到开头循环写，如下面这个图所示。<br>
-<img src="./_image/2019-04-27-11-02-04.png" alt=""></p>
+<img src="./_image/2019-04-27-11-02-04.png" alt="" loading="lazy"></p>
 <p>write pos 是当前记录的位置，一边写一边后移，写到第 3 号文件末尾后就回到 0 号文件 开头。checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录更新到数据文件。</p>
 <p>write pos 和 checkpoint 之间的是还空着的部分，可以用来记录新的操作。如果 write pos 追上 checkpoint，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint 推进一下。</p>
 <p>有了 redo log，InnoDB 就可以保证即使数据库发生异常重启，之前提交的记录都不会丢 失，这个能力称为<strong>crash-safe</strong>。</p>
@@ -204,7 +204,7 @@
 <li>执行器调用引擎的提交事务接口，引擎把刚刚写入的 redo log 改成提交(commit)状态，更新完成。</li>
 </ol>
 <p>为了方便理解，下面给出这个 update 语句的执行流程图，图中浅色框表示是在 InnoDB 内部执行的， 深色框表示是在执行器中执行的。<br>
-<img src="https://ws3.sinaimg.cn/large/005BYqpggy1g2h80gswduj30k00b9js8.jpg" alt="update 语句执行流程"><br>
+<img src="https://ws3.sinaimg.cn/large/005BYqpggy1g2h80gswduj30k00b9js8.jpg" alt="update 语句执行流程" loading="lazy"><br>
 你可能注意到了，最后三步看上去有点“绕”，将 redo log 的写入拆成了两个步骤: prepare 和 commit，这就是&quot;两阶段提交&quot;。</p>
 <h2 id="两阶段提交">两阶段提交</h2>
 <p>为什么必须有“两阶段提交”呢?这是为了让两份日志之间的逻辑一致。要说明这个问 题，我们得从文章开头的那个问题说起:怎样让数据库恢复到半个月内任意一秒的状态?<br>
@@ -242,15 +242,15 @@
                 
                   
                     
-                  <a href="https://xsctx7788.github.io//tag/daily" title="View all posts in daily">daily</a>
+                  <a href="https://xsctx7788.github.io/tag/daily/" title="View all posts in daily">daily</a>
                     
                     
                     
-                  <a href="https://xsctx7788.github.io//tag/sql" title="View all posts in Mysql">Mysql</a>
+                  <a href="https://xsctx7788.github.io/tag/sql/" title="View all posts in Mysql">Mysql</a>
                     
                     
                     
-                  <a href="https://xsctx7788.github.io//tag/go" title="View all posts in go">go</a>
+                  <a href="https://xsctx7788.github.io/tag/go/" title="View all posts in go">go</a>
                     
                     
               </p>
@@ -262,7 +262,7 @@
           </div>
           <div class="author-meta">
             <div class="author">
-              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1568858856967" class='avatar avatar-72 photo' height='72' width='72'>
+              <img alt='' src="https://xsctx7788.github.io//images/avatar.png?v=1585484736270" class='avatar avatar-72 photo' height='72' width='72'>
               <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a href='https://xsctx7788.github.io/'>arisen</a> </span>
             </div>
             <div class="bio">
@@ -291,7 +291,7 @@
             <nav class="navigation pagination" role="navigation">
               <h2 class="screen-reader-text">Posts navigation</h2>
               <div class="nav-links">
-                <a class="next page-numbers" href="https://xsctx7788.github.io//post/mysqlstu-1">下一篇->Mysql学习笔记一：一条SQL查询语句是如何执行的</a>
+                <a class="next page-numbers" href="https://xsctx7788.github.io/post/mysqlstu-1/">下一篇->Mysql学习笔记一：一条SQL查询语句是如何执行的</a>
               </div>
             </nav>
           

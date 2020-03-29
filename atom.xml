@@ -2,18 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xsctx7788.github.io/</id>
     <title>日技</title>
-    <updated>2019-09-19T02:07:41.531Z</updated>
+    <updated>2020-03-29T12:25:41.760Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xsctx7788.github.io/"/>
-    <link rel="self" href="https://xsctx7788.github.io//atom.xml"/>
+    <link rel="self" href="https://xsctx7788.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://xsctx7788.github.io//images/avatar.png</logo>
-    <icon>https://xsctx7788.github.io//favicon.ico</icon>
-    <rights>All rights reserved 2019, 日技</rights>
+    <logo>https://xsctx7788.github.io/images/avatar.png</logo>
+    <icon>https://xsctx7788.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, 日技</rights>
     <entry>
         <title type="html"><![CDATA[每日集问-2019-09-18]]></title>
-        <id>https://xsctx7788.github.io//post/daily-2019-09-18</id>
-        <link href="https://xsctx7788.github.io//post/daily-2019-09-18">
+        <id>https://xsctx7788.github.io/post/daily-2019-09-18/</id>
+        <link href="https://xsctx7788.github.io/post/daily-2019-09-18/">
         </link>
         <updated>2019-09-18T02:03:32.000Z</updated>
         <summary type="html"><![CDATA[<p>Expression #1 of SELECT list is not in GROUP BY</p>
@@ -23,8 +23,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[ 每日集问-2019-05-21]]></title>
-        <id>https://xsctx7788.github.io//post/daily-2019-05-21</id>
-        <link href="https://xsctx7788.github.io//post/daily-2019-05-21">
+        <id>https://xsctx7788.github.io/post/daily-2019-05-21/</id>
+        <link href="https://xsctx7788.github.io/post/daily-2019-05-21/">
         </link>
         <updated>2019-05-21T10:06:09.000Z</updated>
         <summary type="html"><![CDATA[<p>fpm和cli,多机器session,mq</p>
@@ -34,8 +34,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[每日集问-2019-05-18]]></title>
-        <id>https://xsctx7788.github.io//post/daily-2019-05-18</id>
-        <link href="https://xsctx7788.github.io//post/daily-2019-05-18">
+        <id>https://xsctx7788.github.io/post/daily-2019-05-18/</id>
+        <link href="https://xsctx7788.github.io/post/daily-2019-05-18/">
         </link>
         <updated>2019-05-18T10:03:18.000Z</updated>
         <summary type="html"><![CDATA[<p>数组函数,关键字的区别,varchar和char</p>
@@ -45,8 +45,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[每日集问-2019-05-15]]></title>
-        <id>https://xsctx7788.github.io//post/daily-2019-05-15</id>
-        <link href="https://xsctx7788.github.io//post/daily-2019-05-15">
+        <id>https://xsctx7788.github.io/post/daily-2019-05-15/</id>
+        <link href="https://xsctx7788.github.io/post/daily-2019-05-15/">
         </link>
         <updated>2019-05-15T09:54:48.000Z</updated>
         <summary type="html"><![CDATA[<p>空值区分，单双引号，读取文件</p>
@@ -56,8 +56,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Mysql学习笔记二]]></title>
-        <id>https://xsctx7788.github.io//post/mysqlstu-2</id>
-        <link href="https://xsctx7788.github.io//post/mysqlstu-2">
+        <id>https://xsctx7788.github.io/post/mysqlstu-2/</id>
+        <link href="https://xsctx7788.github.io/post/mysqlstu-2/">
         </link>
         <updated>2019-05-12T01:52:56.000Z</updated>
         <summary type="html"><![CDATA[<p>一条SQL更新语句是如何执行的</p>
@@ -67,8 +67,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Mysql学习笔记一：一条SQL查询语句是如何执行的]]></title>
-        <id>https://xsctx7788.github.io//post/mysqlstu-1</id>
-        <link href="https://xsctx7788.github.io//post/mysqlstu-1">
+        <id>https://xsctx7788.github.io/post/mysqlstu-1/</id>
+        <link href="https://xsctx7788.github.io/post/mysqlstu-1/">
         </link>
         <updated>2019-05-05T11:41:39.000Z</updated>
         <summary type="html"><![CDATA[<p>一条SQL查询语句是如何执行的</p>
@@ -78,8 +78,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[每日集问-2019-05-02]]></title>
-        <id>https://xsctx7788.github.io//post/daily-20190502</id>
-        <link href="https://xsctx7788.github.io//post/daily-20190502">
+        <id>https://xsctx7788.github.io/post/daily-20190502/</id>
+        <link href="https://xsctx7788.github.io/post/daily-20190502/">
         </link>
         <updated>2019-05-02T12:52:33.000Z</updated>
         <summary type="html"><![CDATA[<p>echo、print、print_r、printf、sprintf、var_dump</p>
@@ -89,8 +89,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[ 每日集问-2019-04-30]]></title>
-        <id>https://xsctx7788.github.io//post/daily-20190430</id>
-        <link href="https://xsctx7788.github.io//post/daily-20190430">
+        <id>https://xsctx7788.github.io/post/daily-20190430/</id>
+        <link href="https://xsctx7788.github.io/post/daily-20190430/">
         </link>
         <updated>2019-04-30T01:30:54.000Z</updated>
         <summary type="html"><![CDATA[<p>传值与传引用、大流量访问、include和require</p>
@@ -100,8 +100,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[每日集问-2019-04-28]]></title>
-        <id>https://xsctx7788.github.io//post/daily-20190428</id>
-        <link href="https://xsctx7788.github.io//post/daily-20190428">
+        <id>https://xsctx7788.github.io/post/daily-20190428/</id>
+        <link href="https://xsctx7788.github.io/post/daily-20190428/">
         </link>
         <updated>2019-04-28T01:39:36.000Z</updated>
         <summary type="html"><![CDATA[<p>设计模式、POST和GET、session与cookie</p>
@@ -111,8 +111,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[每日集问-2019-04-25]]></title>
-        <id>https://xsctx7788.github.io//post/daily-20190425</id>
-        <link href="https://xsctx7788.github.io//post/daily-20190425">
+        <id>https://xsctx7788.github.io/post/daily-20190425/</id>
+        <link href="https://xsctx7788.github.io/post/daily-20190425/">
         </link>
         <updated>2019-04-25T04:26:22.000Z</updated>
         <summary type="html"><![CDATA[<p>数据库引擎的区别</p>
